@@ -1,0 +1,1 @@
+export { BtnSecondary } from './BtnSecondary';

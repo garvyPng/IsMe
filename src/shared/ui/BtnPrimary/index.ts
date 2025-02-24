@@ -1,0 +1,1 @@
+export { BtnPrimary } from './BtnPrimary';
