@@ -33,29 +33,41 @@ const FaqItem = ({
                 </span>
             </button>
 
-            {isActive && (
-                <div className='mt-2 max-h-[150px] space-y-2  pt-3 pb-5 px-4 rounded-md'>
-                    <p className='text-sm md:text-base text-justify text-(--color-secondary)'>
-                        {answer}
-                    </p>
-                </div>
-            )}
+            {/* {isActive && ( */}
+            <div
+                className={`mt-2 space-y-2  pt-3 px-4 rounded-md overflow-hidden transition-all duration-300 ease-in-out ${
+                    isActive ? 'max-h-[1000px] pb-5 ' : 'max-h-0 pb-0'
+                }`}
+            >
+                <p className='text-sm md:text-base text-justify text-(--color-secondary)'>
+                    {answer}
+                </p>
+            </div>
+            {/* )} */}
         </div>
     );
 };
 
 const faqs = [
     {
-        question: 'What is React?',
-        answer: 'React is a JavaScript library for building user interfaces, developed by Facebook.',
+        question: 'Lorem ipsum ipsum ?',
+        answer: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.',
     },
     {
-        question: 'How does state work in React?',
-        answer: 'State is an object that holds the data that affects the rendering of a component. It can be updated using the `setState` function.',
+        question: 'Lorem ipsum ipsum ?',
+        answer: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.',
     },
     {
-        question: 'What is a component in React?',
-        answer: 'A component is a reusable and self-contained unit of the UI. Components can be either functional or class-based.',
+        question: 'Lorem ipsum ipsum ?',
+        answer: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.',
+    },
+    {
+        question: 'Lorem ipsum ipsum ?',
+        answer: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.',
+    },
+    {
+        question: 'Lorem ipsum ipsum ?',
+        answer: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.',
     },
 ];
 

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { SectionInfo } from '../../../shared/ui/SectionInfo';
 import { ChevronDownIcon } from '@heroicons/react/16/solid';
 import { BtnPrimary } from '../../../shared/ui/BtnPrimary';
+import { useForm } from 'react-hook-form';
 
 const FormSwaper = ({
     text,
@@ -23,10 +24,20 @@ const FormSwaper = ({
 );
 
 export const LauncherSection = () => {
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm();
+    const onSubmit = (data: Record<string, string>) => {
+        console.log(data);
+        console.log(errors);
+    };
+
     const [formPage, setFormPage] = useState('Buy');
     const [isOpen, setIsOpen] = useState(false);
     return (
-        <section className='container px-6 lg:max-w-7xl mx-auto mt-[80px] md:mt-[135px] h-auto flex flex-col gap-y-6 lg:flex-row justify-between align-middle'>
+        <section className='container px-6 lg:max-w-7xl mx-auto mt-[80px] md:mt-[135px] h-auto flex flex-col gap-6 lg:flex-row justify-between align-middle'>
             <SectionInfo
                 title={'Crypto launcher'}
                 linkName={'Learn more about Token'}
@@ -53,7 +64,7 @@ export const LauncherSection = () => {
                     Web3 passport).
                 </p>
             </SectionInfo>
-            <div className='lg:w-4/9 p-6 border border-(--color-light-grey) rounded-2xl'>
+            <div className='lg:w-7/15 p-6 border border-(--color-light-grey) rounded-2xl'>
                 <div className='h-full flex flex-col flex-auto'>
                     <div className='w-full flex border-b border-b-(--color-light-grey)'>
                         <div className='flex gap-x-4'>
@@ -74,16 +85,32 @@ export const LauncherSection = () => {
                             />
                         </div>
                     </div>
-                    <div className='h-full flex flex-col justify-between'>
+                    <form
+                        onSubmit={handleSubmit(onSubmit)}
+                        className='h-full flex flex-col justify-between'
+                    >
                         <div className='h-auto'>
                             <div className='mt-2'>
-                                <div className='flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-(--color-light-grey) has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600'>
+                                <div
+                                    className={`flex items-center rounded-md bg-slate-100 pl-3 border
+                                         ${
+                                             errors.crypto
+                                                 ? 'border-red-500'
+                                                 : 'border-slate-200'
+                                         } has-[input:focus-within]:bg-white`}
+                                >
                                     <input
+                                        {...register('price', {
+                                            required: true,
+                                            maxLength: 80,
+                                            pattern:
+                                                /^(0|[1-9]\d*)([.,]\d{1,10})?$/i,
+                                        })}
                                         id='price'
                                         name='price'
                                         type='text'
                                         placeholder='0.00'
-                                        className='block min-w-0 grow py-4 pr-3 pl-1 text-base placeholder:text-gray-400 focus:outline-none sm:text-sm/6'
+                                        className='appearance-none block min-w-0 grow py-4 pr-3 pl-1 text-base placeholder:text-gray-400 focus:outline-none sm:text-sm/6'
                                     />
                                     <div className='grid shrink-0 grid-cols-1 focus-within:relative'>
                                         <select
@@ -102,22 +129,40 @@ export const LauncherSection = () => {
                                         />
                                     </div>
                                 </div>
+                                {errors.price && (
+                                    <p className='text-red-500 text-xs italic'>
+                                        Please fill out this field.
+                                    </p>
+                                )}
                             </div>
                             <div className='mt-2'>
-                                <div className='flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-(--color-light-grey) has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600'>
+                                <div
+                                    className={`flex items-center rounded-md bg-slate-100 pl-3 border
+                                         ${
+                                             errors.crypto
+                                                 ? 'border-red-500'
+                                                 : 'border-slate-200'
+                                         } has-[input:focus-within]:bg-white`}
+                                >
                                     <input
-                                        id='price'
-                                        name='price'
+                                        {...register('crypto', {
+                                            required: true,
+                                            maxLength: 80,
+                                            pattern:
+                                                /^(0|[1-9]\d*)([.,]\d{1,10})?$/i,
+                                        })}
+                                        id='crypto'
+                                        name='crypto'
                                         type='text'
                                         placeholder='0.00'
-                                        className='block min-w-0 grow py-4 pr-3 pl-1 text-base placeholder:text-gray-400 focus:outline-none sm:text-sm/6'
+                                        className='appearance-none block min-w-0 grow py-4 pr-3 pl-1 text-base placeholder:text-gray-400 focus:outline-none sm:text-sm/6'
                                     />
                                     <div></div>
                                     <div className='grid shrink-0 grid-cols-1 focus-within:relative'>
                                         <select
-                                            id='currency'
-                                            name='currency'
-                                            aria-label='Currency'
+                                            id='cryptoSelect'
+                                            name='cryptoSelect'
+                                            aria-label='Crypto'
                                             className='col-start-1 row-start-1 w-full appearance-none rounded-md py-1.5 pr-7 pl-3 text-base text-(--color-secondary) placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6'
                                         >
                                             <option>COIN</option>
@@ -130,6 +175,11 @@ export const LauncherSection = () => {
                                         />
                                     </div>
                                 </div>
+                                {errors.crypto && (
+                                    <p className='text-red-500 text-xs italic'>
+                                        Please fill out this field.
+                                    </p>
+                                )}
                             </div>
 
                             <div className='w-full mx-auto my-2 border border-(--color-light-grey) text-(--color-secondary) rounded-md block min-w-0 grow py-4 pl-1 pr-2'>
@@ -150,30 +200,29 @@ export const LauncherSection = () => {
                                     </span>
                                 </button>
 
-                                {isOpen && (
-                                    <div className='mt-2 max-h-[150px] overflow-y-auto  space-y-2  p-3 rounded-md'>
-                                        <p className='text-justify'>
-                                            Lorem ipsum dolor, sit amet
-                                            consectetur adipisicing elit. Facere
-                                            aliquid eligendi voluptatibus
-                                            ducimus voluptas corporis aperiam,
-                                            magnam debitis consequatur
-                                            perspiciatis ut optio esse accusamus
-                                            cupiditate enim sed, est commodi.
-                                            Eum.
-                                        </p>
-                                    </div>
-                                )}
+                                <div
+                                    className={`overflow-y-auto px-3 space-y-2 rounded-md overflow-hidden transition-all duration-300 ease-in-out ${
+                                        isOpen
+                                            ? 'max-h-[150px] py-3 mt-2'
+                                            : 'max-h-0 p-0 m-0'
+                                    } `}
+                                >
+                                    <p className='text-justify'>
+                                        Lorem ipsum dolor, sit amet consectetur
+                                        adipisicing elit. Facere aliquid
+                                        eligendi voluptatibus ducimus voluptas
+                                        corporis aperiam, magnam debitis
+                                        consequatur perspiciatis ut optio esse
+                                        accusamus cupiditate enim sed, est
+                                        commodi. Eum.
+                                    </p>
+                                </div>
                             </div>
                         </div>
-
-                        {/* <button className='w-full mt-auto bg-blue-300 rounded-lg py-[16px] text-sm font-semibold text-white uppercase'>
-                            Continue
-                        </button> */}
                         <BtnPrimary add='w-full py-[16px] uppercase font-semibold text-sm'>
                             Continue
                         </BtnPrimary>
-                    </div>
+                    </form>
                 </div>
             </div>
         </section>
