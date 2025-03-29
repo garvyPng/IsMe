@@ -1,3 +1,5 @@
+import { useInView } from '../../../shared/hooks';
+
 const trustedServices = [
     { name: 'Telegram', icon: '/images/icons/telegram.svg' },
     { name: 'WhatsApp', icon: '/images/icons/whatsApp.svg' },
@@ -19,10 +21,14 @@ const TrustedItem = ({ name, icon }: { name: string; icon: string }) => (
 );
 
 export const TrustedBy = () => {
+    const { ref, isVisible } = useInView();
     return (
         <div className='container px-6 lg:max-w-7xl mx-auto mt-[80px] md:mt-[135px]'>
             <div
-                className='w-auto h-auto md:h-[184px] flex flex-col gap-y-3 lg:flex-row justify-center lg:justify-between items-center p-6 lg:px-[110px] font-semibold text-lg lg:text-xl rounded-2xl'
+                ref={ref}
+                className={`${
+                    isVisible ? 'animate-bounce-in' : 'animate-none'
+                }  w-auto h-auto md:h-[184px] flex flex-col gap-y-3 lg:flex-row justify-center lg:justify-between items-center p-6 lg:px-[110px] font-semibold text-lg lg:text-xl rounded-2xl`}
                 style={{
                     boxShadow:
                         '0px 4px 10px rgba(0, 0, 0, 0.1), 0px -4px 10px rgba(0, 0, 0, 0.1)',

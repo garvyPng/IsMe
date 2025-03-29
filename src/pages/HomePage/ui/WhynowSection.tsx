@@ -1,22 +1,33 @@
 import { ReactNode } from 'react';
 import { SectionHeader } from '../../../shared/ui/SectionHeader';
 import { BtnSecondary } from '../../../shared/ui/BtnSecondary';
-
+import { useInView } from '../../../shared/hooks';
 const TimelineItem = ({
     title,
     children,
+    animation,
 }: {
     title: string;
     children: ReactNode;
-}) => (
-    <div className=''>
-        <h3 className='text-lg lg:text-xl font-semibold mb-[17px]'>{title}</h3>
-        <div className='text-(--color-secondary) text-justify lg:leading-[36px]'>
-            {children}
+    animation: string;
+}) => {
+    const { ref, isVisible } = useInView();
+    return (
+        <div
+            ref={ref}
+            className={`${animation} ${
+                isVisible ? 'animate-bounce-in' : 'animate-none'
+            }`}
+        >
+            <h3 className='text-lg lg:text-xl font-semibold mb-[17px]'>
+                {title}
+            </h3>
+            <div className='text-(--color-secondary) text-justify lg:leading-[36px]'>
+                {children}
+            </div>
         </div>
-    </div>
-);
-
+    );
+};
 export const WhynowSection = () => {
     return (
         <section className='container px-6 lg:max-w-7xl mx-auto mt-[80px] md:mt-[135px] h-auto'>
@@ -27,7 +38,10 @@ export const WhynowSection = () => {
             ></SectionHeader>
             <div className='flex flex-col md:flex-row gap-y-6 justify-between'>
                 <div className='md:w-2/6 gap-y-6 flex flex-col justify-between'>
-                    <TimelineItem title={'The Rise of AI-Powered Fraud'}>
+                    <TimelineItem
+                        animation=''
+                        title={'The Rise of AI-Powered Fraud'}
+                    >
                         <p>
                             &#127917;
                             <span className='inline-block bg-yellow-300/50 rounded-md px-[7px]'>
@@ -42,7 +56,7 @@ export const WhynowSection = () => {
                         </p>
                     </TimelineItem>
                     <div className='hidden md:block'>
-                        <TimelineItem title={'The Breaking Point'}>
+                        <TimelineItem animation='' title={'The Breaking Point'}>
                             <p>
                                 &#129302;Generative AI reaches new levels,
                                 making identity fraud nearly undetectable.
@@ -118,7 +132,10 @@ export const WhynowSection = () => {
                     </div>
                 </div>
                 <div className='md:w-2/6 flex flex-col gap-y-6 justify-between'>
-                    <TimelineItem title={'The Identity Crisis'}>
+                    <TimelineItem
+                        animation='delay-[7000ms]'
+                        title={'The Identity Crisis'}
+                    >
                         <p>
                             &#128201;Phishing and social engineering scams
                             explode, with a 500% increase in AI-generated fraud
@@ -136,7 +153,7 @@ export const WhynowSection = () => {
                         </p>
                     </TimelineItem>
                     <div className='md:hidden'>
-                        <TimelineItem title={'The Breaking Point'}>
+                        <TimelineItem animation='' title={'The Breaking Point'}>
                             <p>
                                 &#129302;Generative AI reaches new levels,
                                 making identity fraud nearly undetectable.
@@ -154,7 +171,10 @@ export const WhynowSection = () => {
                             </p>
                         </TimelineItem>
                     </div>
-                    <TimelineItem title={'The Future of Digital Trust'}>
+                    <TimelineItem
+                        animation='delay-[7000ms]'
+                        title={'The Future of Digital Trust'}
+                    >
                         <p>
                             &#9989;Blockchain-based identity verification
                             becomes essential—just{' '}

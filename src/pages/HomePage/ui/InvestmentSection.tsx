@@ -10,6 +10,7 @@ import {
 } from 'recharts';
 import { Select } from '../../../shared/ui/Select';
 import { BtnPrimary } from '../../../shared/ui/BtnPrimary';
+import { useForm } from 'react-hook-form';
 
 const data = {
     revenue: [
@@ -39,6 +40,10 @@ export const InvestmentSection = () => {
     const [selectedMetric, setSelectedMetric] =
         useState<(typeof metrics)[number]['value']>('revenue');
     const [selectedDate, setSelectedDate] = useState(dates[0].value);
+    const { register, handleSubmit } = useForm();
+    const onSubmit = (data: Record<string, string>) => {
+        console.log(data);
+    };
 
     return (
         <section className='container px-6 lg:max-w-7xl mx-auto mt-[80px] md:mt-[135px] h-auto'>
@@ -47,24 +52,23 @@ export const InvestmentSection = () => {
                 subtitle='Fraud prevention is no longer an option—it’s a necessity. With AI-driven scams growing at an alarming rate, businesses and individuals are in urgent need of a trust verification system.'
             />
             <div className='flex flex-col lg:flex-row justify-between gap-6 items-center'>
-                <div className='w-full lg:w-1/2 mx-auto p-6 bg-white rounded-xl shadow-lg'>
-                    <div className='flex gap-4 mb-6'>
-                        {/* Выбор метрики */}
+                <div className='w-full lg:w-7/15 py-6 pr-6 border border-(--color-light-grey) rounded-2xl'>
+                    <div className='flex gap-4 mb-6 pl-6'>
                         <Select
+                            id='metric'
                             options={metrics}
                             selectedValue={selectedMetric}
                             onChange={setSelectedMetric}
                         />
 
-                        {/* Выбор даты */}
                         <Select
+                            id='date'
                             options={dates}
                             selectedValue={selectedDate}
                             onChange={setSelectedDate}
                         />
                     </div>
 
-                    {/* График */}
                     <ResponsiveContainer width='100%' height={300}>
                         <LineChart data={data[selectedMetric]}>
                             <XAxis dataKey='date' />
@@ -79,7 +83,7 @@ export const InvestmentSection = () => {
                         </LineChart>
                     </ResponsiveContainer>
                 </div>
-                <div className='lg:w-1/2 mx-auto leading-[162%]'>
+                <div className='lg:max-w-7/15 flex flex-col justify-center text-base text-justify lg:text-lg/[36px]'>
                     <h4 className='font-semibold'>
                         Join the Mission – Invest in the Future
                     </h4>
@@ -103,8 +107,8 @@ export const InvestmentSection = () => {
                         </li>
                     </ul>
                     <p className='text-(--color-secondary)'>
-                        Be part of the next big revolution in digital security.
-                        <br />
+                        {/* Be part of the next big revolution in digital security.
+                        <br /> */}
                         Funding Goal: $5M
                     </p>
                     <ul className='pl-5 text-(--color-secondary)'>
@@ -124,15 +128,19 @@ export const InvestmentSection = () => {
                 </div>
             </div>
 
-            <div className='mt-10 flex justify-center gap-x-6'>
+            <form
+                onSubmit={handleSubmit(onSubmit)}
+                className='mt-10 flex justify-center gap-x-6'
+            >
                 <input
+                    {...register('invest')}
                     className='appearance-none block max-w-[130px] border border-(--color-light-grey) rounded-md py-3 px-4 leading-tight focus:outline-none'
                     id='grid-first-name'
-                    type='text'
+                    type='number'
                     placeholder='100$'
                 />
                 <BtnPrimary>Invest Now</BtnPrimary>
-            </div>
+            </form>
         </section>
     );
 };

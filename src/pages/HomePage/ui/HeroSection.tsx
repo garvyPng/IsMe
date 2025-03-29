@@ -17,7 +17,7 @@ export const HeroSection = () => {
                             Safety.
                         </span>
                     </h1>
-                    <p className='text-(--color-secondary) text-base text-center md:text-justify lg:text-lg pb-8'>
+                    <p className='lg:max-w-120 text-(--color-secondary) text-base text-center md:text-justify lg:text-lg pb-8'>
                         The revolutionary fraud prevention technology that will
                         redefine digital trust.
                     </p>

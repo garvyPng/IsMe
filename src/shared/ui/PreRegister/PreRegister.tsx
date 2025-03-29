@@ -1,7 +1,15 @@
+import { useInView } from '../../hooks';
+
 export const PreRegister = () => {
+    const { ref, isVisible } = useInView();
     return (
         <div className='container px-6 lg:max-w-7xl mx-auto mt-[80px] md:mt-[135px] h-auto'>
-            <div className='w-full rounded-2xl p-8 md:p-15 bg-yellow-300 flex flex-col md:flex-row items-center justify-between gap-y-6'>
+            <div
+                ref={ref}
+                className={`${
+                    isVisible ? 'animate-bounce-in' : 'animate-none'
+                } w-full rounded-2xl p-8 md:p-15 bg-yellow-300 flex flex-col md:flex-row items-center justify-between gap-y-6`}
+            >
                 <p className='md:w-1/2 text-center md:text-start md:leading-[55px] text-xl md:text-3xl font-extrabold'>
                     Be Among the First to Experience the Future of Digital
                     Identity!

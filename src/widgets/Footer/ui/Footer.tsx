@@ -1,6 +1,16 @@
+import { useForm } from 'react-hook-form';
 import { BtnPrimary } from '../../../shared/ui/BtnPrimary';
 
 export const Footer = () => {
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm();
+    const onSubmit = (data: Record<string, string>) => {
+        console.log(data);
+    };
+
     return (
         <footer className=''>
             <div className='container pl-6 pr-6  lg:max-w-7xl h-auto mt-[80px] md:mt-[135px] mx-auto w-full max-w-screen-xl'>
@@ -13,38 +23,64 @@ export const Footer = () => {
                             sign up for the latest beauty news,product samples
                             and cupons
                         </p>
-                        <form className='my-6'>
+                        <form
+                            onSubmit={handleSubmit(onSubmit)}
+                            className='my-6'
+                        >
                             <div className='flex flex-wrap -mx-3 mb-3'>
                                 <div className='w-full md:w-1/2 px-3 mb-6 md:mb-0'>
                                     <label
                                         className='block uppercase tracking-wide text-xs font-semibold mb-2'
-                                        htmlFor='grid-first-name'
+                                        htmlFor='footer_email'
                                     >
                                         EMAIL ADDRESS*
                                     </label>
                                     <input
-                                        className='appearance-none block w-full bg-gray-200 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'
-                                        id='grid-first-name'
+                                        {...register('email', {
+                                            required: true,
+                                            pattern: /^\S+@\S+$/i,
+                                        })}
+                                        className={`appearance-none block w-full bg-slate-100 border ${
+                                            errors.email
+                                                ? 'border-red-500'
+                                                : 'border-slate-200'
+                                        } rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white`}
+                                        id='footer_email'
                                         type='text'
                                         placeholder='Enter your Email Address'
                                     />
-                                    <p className='text-red-500 text-xs italic'>
-                                        Please fill out this field.
-                                    </p>
+                                    {errors.email && (
+                                        <p className='text-red-500 text-xs italic'>
+                                            Please fill out this field.
+                                        </p>
+                                    )}
                                 </div>
                                 <div className='w-full md:w-1/2 px-3'>
                                     <label
                                         className='block uppercase tracking-wide text-xs font-semibold mb-2'
-                                        htmlFor='grid-last-name'
+                                        htmlFor='footer_name'
                                     >
                                         NAME*
                                     </label>
                                     <input
-                                        className='appearance-none block w-full bg-gray-200 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
-                                        id='grid-last-name'
+                                        {...register('name', {
+                                            required: true,
+                                            maxLength: 80,
+                                        })}
+                                        className={`appearance-none block w-full bg-slate-100 border ${
+                                            errors.name
+                                                ? 'border-red-500'
+                                                : 'border-slate-200'
+                                        } rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white`}
+                                        id='footer_name'
                                         type='text'
                                         placeholder='Enter your Name'
                                     />
+                                    {errors.name && (
+                                        <p className='text-red-500 text-xs italic'>
+                                            Please fill out this field.
+                                        </p>
+                                    )}
                                 </div>
                             </div>
                             <BtnPrimary add='w-full py-[16px] uppercase font-semibold text-sm'>
@@ -148,22 +184,22 @@ export const Footer = () => {
                 </div>
 
                 <div className='flex gap-x-4'>
-                    <button className='size-10 bg-yellow-300 rounded-full flex justify-center items-center'>
+                    <button className='size-10 bg-yellow-300 hover:scale-115 transition-all duration-300 ease-in-out  rounded-full flex justify-center items-center'>
                         <img
                             className='size-4'
                             src='/images/icons/youtube.svg'
                         />
                     </button>
-                    <button className='size-10 bg-red-300 rounded-full flex justify-center items-center'>
+                    <button className='size-10 bg-red-300 hover:scale-115 transition-all duration-300 ease-in-out rounded-full flex justify-center items-center'>
                         <img
                             className='size-4'
                             src='/images/icons/facebook.svg'
                         />
                     </button>
-                    <button className='size-10 bg-green-300 rounded-full flex justify-center items-center'>
+                    <button className='size-10 bg-green-300 hover:scale-115 transition-all duration-300 ease-in-out rounded-full flex justify-center items-center'>
                         <img className='size-4' src='/images/icons/media.svg' />
                     </button>
-                    <button className='size-10 bg-blue-300 rounded-full flex justify-center items-center'>
+                    <button className='size-10 bg-blue-300 hover:scale-115 transition-all duration-300 ease-in-out rounded-full flex justify-center items-center'>
                         <img
                             className='size-4'
                             src='/images/icons/twiter.svg'

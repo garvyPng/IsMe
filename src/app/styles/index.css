@@ -4,12 +4,44 @@
   --color-primary: oklch(24.33% 0.0247 263.95);
   --color-secondary: oklch(44.74% 0.0343 261.32);
   --color-light-grey: oklch(87.95% 0.0246 259.82);
+
   --color-yellow-300: oklch(94.57% 0.0834 94.27);
+  --color-yellow-500: oklch(89% 0.0834 94.27);
+
   --color-red-300: oklch(70.55% 0.1899 13.38);
+  --color-red-500: oklch(65.55% 0.1899 13.38);
+
   --color-blue-300: oklch(63.89% 0.1517 276.98);
   --color-blue-500: oklch(58% 0.1517 276.98);
+
   --color-green-300: oklch(92.95% 0.1005 170.42);
+  --color-green-500: oklch(87% 0.1005 170.42);
 }
+
+@theme {
+  --animate-bounce-in: bounce-in 1s ease-in-out;
+
+  @keyframes bounce-in {
+    0% {
+      opacity: 0;
+      transform: scale(.5);
+    }
+
+    50% {
+      opacity: 1;
+      transform: scale(1.05);
+    }
+
+    70% {
+      transform: scale(.9);
+    }
+
+    100% {
+      transform: scale(1);
+    }
+  }
+}
+
 
 
 @font-face {

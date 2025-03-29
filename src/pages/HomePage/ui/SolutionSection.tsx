@@ -1,14 +1,24 @@
+import { useState } from 'react';
 import { PlayBtn } from '../../../shared/ui/PlayBtn';
 import { SectionInfo } from '../../../shared/ui/SectionInfo';
+import { VideoPlayer } from '../../../shared/ui/VideoPlayer';
 
 export const SolutionSection = () => {
+    const [isPlaying, setIsPlaying] = useState(false);
+    const videoUrl = 'https://www.youtube.com/watch?v=KZGWfHdfWQs';
     return (
         <section className='container px-6 lg:max-w-7xl mx-auto mt-[80px] md:mt-[135px] h-auto flex flex-col md:flex-row gap-y-6 items-start lg:justify-between align-middle'>
             <div className='flex gap-y-6 order-1 lg:order-0 md:ml-6 lg:ml-0 lg:mr-6 flex-col justify-between'>
                 <div className='relative flex justify-center items-center'>
                     <img className='rounded-2xl' src='/images/video.jpg' />
                     <div className='absolute'>
-                        <PlayBtn />
+                        <PlayBtn onClick={() => setIsPlaying(true)} />
+                        {isPlaying && (
+                            <VideoPlayer
+                                videoUrl={videoUrl}
+                                onClose={() => setIsPlaying(false)}
+                            />
+                        )}
                     </div>
                 </div>
                 <div className='flex'>
