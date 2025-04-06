@@ -24,7 +24,7 @@ export const VideoPlayer = ({ videoUrl, onClose }: VideoPlayerProps) => {
                 />
                 <button
                     onClick={onClose}
-                    className='text-white text-lg absolute -top-[27px] -right-[25px] cursor-pointer'
+                    className=' text-white text-2xl absolute -top-[27px] right-5 md:-right-[25px] cursor-pointer'
                 >
                     &times;
                 </button>

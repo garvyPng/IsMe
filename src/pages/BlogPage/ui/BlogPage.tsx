@@ -1,8 +1,14 @@
+import { useEffect } from 'react';
 import { PageIntro } from '../../../shared/ui/PageIntro';
 import { PreRegister } from '../../../shared/ui/PreRegister';
-import { NewsContent } from './NewsContent';
+import { BlogContent } from './BlogContent';
+import { useArticles } from '../../../context/ArticleContext';
 
-export const NewsPage = () => {
+export const BlogPage = () => {
+    const { articles, loadArticlesFromSource } = useArticles();
+    useEffect(() => {
+        loadArticlesFromSource('blogData').then();
+    }, [loadArticlesFromSource]);
     return (
         <>
             <PageIntro
@@ -10,7 +16,7 @@ export const NewsPage = () => {
                 coloredTitle='New'
                 subtitle='The revolutionary fraud prevention technology that will redefine digital trust. The revolutionary fraud prevention technology that will redefine digital trust.'
             />
-            <NewsContent />
+            <BlogContent articles={articles} basePath='/blog' />
             <PreRegister />
         </>
     );

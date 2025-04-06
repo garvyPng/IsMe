@@ -16,10 +16,12 @@ export const AboutPlayer = () => {
                     <div className='absolute'>
                         <PlayBtn onClick={() => setIsPlaying(true)} />
                         {isPlaying && (
-                            <VideoPlayer
-                                videoUrl={videoUrl}
-                                onClose={() => setIsPlaying(false)}
-                            />
+                            <div className=''>
+                                <VideoPlayer
+                                    videoUrl={videoUrl}
+                                    onClose={() => setIsPlaying(false)}
+                                />
+                            </div>
                         )}
                     </div>
                 </div>

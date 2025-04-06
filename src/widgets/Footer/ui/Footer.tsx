@@ -1,14 +1,35 @@
 import { useForm } from 'react-hook-form';
 import { BtnPrimary } from '../../../shared/ui/BtnPrimary';
 
+interface FormValues {
+    email: string;
+    name: string;
+}
+
 export const Footer = () => {
     const {
         register,
         handleSubmit,
         formState: { errors },
-    } = useForm();
-    const onSubmit = (data: Record<string, string>) => {
-        console.log(data);
+    } = useForm<FormValues>();
+    const onSubmit = async (data: FormValues) => {
+        try {
+            const response = await fetch('https://example.com/api/subscribe', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            });
+
+            if (!response.ok) {
+                throw new Error('Error while sending data');
+            }
+
+            return await response.json();
+        } catch (error) {
+            console.error('Error:', error);
+        }
     };
 
     return (
@@ -37,8 +58,12 @@ export const Footer = () => {
                                     </label>
                                     <input
                                         {...register('email', {
-                                            required: true,
-                                            pattern: /^\S+@\S+$/i,
+                                            required: 'Email is required',
+                                            pattern: {
+                                                value: /^\S+@\S+$/i,
+                                                message:
+                                                    'Email must be in the format name@.gmail.com',
+                                            },
                                         })}
                                         className={`appearance-none block w-full bg-slate-100 border ${
                                             errors.email
@@ -49,9 +74,10 @@ export const Footer = () => {
                                         type='text'
                                         placeholder='Enter your Email Address'
                                     />
-                                    {errors.email && (
+                                    {typeof errors.email?.message ===
+                                        'string' && (
                                         <p className='text-red-500 text-xs italic'>
-                                            Please fill out this field.
+                                            {errors.email.message}
                                         </p>
                                     )}
                                 </div>
@@ -64,8 +90,11 @@ export const Footer = () => {
                                     </label>
                                     <input
                                         {...register('name', {
-                                            required: true,
-                                            maxLength: 80,
+                                            required: 'Name is required',
+                                            maxLength: {
+                                                value: 80,
+                                                message: 'Name is too long',
+                                            },
                                         })}
                                         className={`appearance-none block w-full bg-slate-100 border ${
                                             errors.name
@@ -76,9 +105,10 @@ export const Footer = () => {
                                         type='text'
                                         placeholder='Enter your Name'
                                     />
-                                    {errors.name && (
+                                    {typeof errors.name?.message ===
+                                        'string' && (
                                         <p className='text-red-500 text-xs italic'>
-                                            Please fill out this field.
+                                            {errors.name.message}
                                         </p>
                                     )}
                                 </div>

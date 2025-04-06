@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import { SectionHeader } from '../../../shared/ui/SectionHeader';
-import { BtnSecondary } from '../../../shared/ui/BtnSecondary';
 import { useInView } from '../../../shared/hooks';
+import { BtnPrimary } from '../../../shared/ui/BtnPrimary';
 const TimelineItem = ({
     title,
     children,
@@ -198,7 +198,7 @@ export const WhynowSection = () => {
                 <p>
                     The time to act is now. The future of trust depends on it.
                 </p>
-                <BtnSecondary>Invest Now</BtnSecondary>
+                <BtnPrimary secondary>Invest Now</BtnPrimary>
             </div>
         </section>
     );

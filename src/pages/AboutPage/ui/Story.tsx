@@ -2,7 +2,7 @@ import { SectionInfo } from '../../../shared/ui/SectionInfo';
 
 export const Story = () => {
     return (
-        <section className='container px-6 lg:max-w-7xl mx-auto mt-[80px] h-auto flex flex-col md:flex-row gap-x-6 lg:justify-between align-middle'>
+        <section className='container px-6 lg:max-w-7xl mx-auto mt-[80px] h-auto flex flex-col md:flex-row gap-x-6 lg:justify-between align-middle items-center'>
             <SectionInfo title='Our Story'>
                 <div className='font-normal text-justify text-(--color-secondary)'>
                     <p>
@@ -29,9 +29,9 @@ export const Story = () => {
                     </p>
                 </div>
             </SectionInfo>
-            <div className=''>
+            <div className='w-full'>
                 <img
-                    className='m-auto h-50 md:w-130 md:h-auto rounded-[130px]'
+                    className='m-auto h-50 w-full object-cover md:w-130 md:h-auto rounded-[50px] lg:rounded-[130px]'
                     src='/images/alien4.webp'
                 />
             </div>

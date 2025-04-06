@@ -70,7 +70,7 @@ const navLinks = [
         ),
     },
     {
-        href: '/news',
+        href: '/blog',
         label: 'Blog',
         icon: (
             <svg
@@ -177,7 +177,13 @@ const SideBar = ({
                             key={link.href}
                         >
                             {link.icon}
-                            <Link to={link.href}>{link.label}</Link>
+                            <Link
+                                className='w-full'
+                                onClick={() => setIsMenuOpen(false)}
+                                to={link.href}
+                            >
+                                {link.label}
+                            </Link>
                         </div>
                     ))}
                 </nav>
@@ -348,12 +354,6 @@ export const Header = () => {
                                     ))}
                                 </ul>
                             )}
-                            {/* <select className='w-full appearance-none rounded-md py-1.5 pr-7 pl-3 text-base focus:outline-none'>
-                                {languages.map((language, index) => (
-                                    <option key={index}>{language.name}</option>
-                                ))}
-                            </select>
-                            <ChevronDownIcon className='absolute right-2 top-1/2 transform -translate-y-1/2 size-5 text-gray-500' /> */}
                         </div>
 
                         {/* Sign In / Sign Up */}

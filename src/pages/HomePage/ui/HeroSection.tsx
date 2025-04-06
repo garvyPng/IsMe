@@ -1,6 +1,4 @@
 import { BtnPrimary } from '../../../shared/ui/BtnPrimary';
-import { BtnSecondary } from '../../../shared/ui/BtnSecondary';
-
 export const HeroSection = () => {
     return (
         <>
@@ -23,7 +21,7 @@ export const HeroSection = () => {
                     </p>
                     <div className='block md:flex space-x-4'>
                         <BtnPrimary>Learn More</BtnPrimary>
-                        <BtnSecondary>Invest Now</BtnSecondary>
+                        <BtnPrimary secondary>Invest Now</BtnPrimary>
                     </div>
                 </div>
                 <div className='h-40 md:h-auto overflow-hidden md:max-w-1/2 md:max-h-auto rounded-3xl md:rounded-[150px] lg:rounded-[230px] flex items-center justify-center'>

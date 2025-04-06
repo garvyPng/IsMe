@@ -53,7 +53,7 @@ export const InvestmentSection = () => {
             />
             <div className='flex flex-col lg:flex-row justify-between gap-6 items-center'>
                 <div className='w-full lg:w-7/15 py-6 pr-6 border border-(--color-light-grey) rounded-2xl'>
-                    <div className='flex gap-4 mb-6 pl-6'>
+                    <div className='flex flex-col md:flex-row gap-4 mb-6 pl-6'>
                         <Select
                             id='metric'
                             options={metrics}
@@ -111,7 +111,7 @@ export const InvestmentSection = () => {
                         <br /> */}
                         Funding Goal: $5M
                     </p>
-                    <ul className='pl-5 text-(--color-secondary)'>
+                    <ul className='md:pl-5 text-(--color-secondary)'>
                         <li className="relative pl-6 before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:w-4 before:h-4 before:rounded-sm before:bg-red-300 before:content-['']">
                             45% – Product development
                         </li>
@@ -130,7 +130,7 @@ export const InvestmentSection = () => {
 
             <form
                 onSubmit={handleSubmit(onSubmit)}
-                className='mt-10 flex justify-center gap-x-6'
+                className='mt-10 flex justify-center gap-x-2 md:gap-x-6'
             >
                 <input
                     {...register('invest')}

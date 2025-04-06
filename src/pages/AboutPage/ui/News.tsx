@@ -33,13 +33,13 @@ export const News = () => {
             <SectionHeader title={"What's New"}></SectionHeader>
             <div className='grid grid-cols-1 lg:grid-cols-3 gap-x-10'>
                 <div className='lg:col-span-2'>
-                    <div className='bg-white'>
+                    <div className='bg-white mb-6 lg:mb-0'>
                         <img
                             src={news[0].image}
                             alt={news[0].title}
-                            className='w-full h-[450px] object-cover rounded-3xl'
+                            className='w-full h-30 md:h-60 lg:h-[450px] object-cover rounded-3xl'
                         />
-                        <div className='flex text-sm text-gray-600 mt-6 gap-x-3 '>
+                        <div className='flex text-xs lg:text-sm text-gray-600 mt-3 lg:mt-6 gap-x-3 '>
                             <div className='uppercase'>
                                 {news[0].tags.map((tag) => (
                                     <span>{tag} | </span>
@@ -56,11 +56,10 @@ export const News = () => {
                                 })}
                             </p>
                         </div>
-
-                        <h3 className='text-2xl font-semibold mt-2 text-justify '>
+                        <h3 className='text-lg lg:text-2xl font-semibold mt-2 text-justify '>
                             {news[0].title}
                         </h3>
-                        <p className='text-gray-600 mt-2  text-justify'>
+                        <p className='text-sm lg:text-base text-gray-600 mt-2  text-justify'>
                             {news[0].description}
                         </p>
                     </div>
@@ -71,7 +70,7 @@ export const News = () => {
                             <img
                                 src={item.image}
                                 alt={item.title}
-                                className='w-full h-40 object-cover rounded-3xl'
+                                className='w-full h-30 md:h-60 lg:h-40 object-cover rounded-3xl'
                             />
                             <div className='flex text-xs text-gray-600 mt-3 gap-x-3 '>
                                 <div className='uppercase'>
@@ -100,7 +99,7 @@ export const News = () => {
                     ))}
                 </div>
                 <a
-                    className='w-max grid-row-2 text-sm lg:text-base bg-linear-65 from-blue-300 from-40% to-green-300 text-transparent bg-clip-text no-underline hover:underline'
+                    className='mt-8 lg:mt-0 w-max grid-row-2 text-sm lg:text-base bg-linear-65 from-blue-300 from-40% to-green-300 text-transparent bg-clip-text no-underline hover:underline'
                     href='#'
                 >
                     More news and insignts <span>&rarr;</span>
