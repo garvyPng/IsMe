@@ -1,0 +1,86 @@
+[
+    {
+        "id": "12345",
+        "title": "Dummy article name",
+        "description": "some dummy description about article",
+        "cover": "http://placehold.it/350x50",
+        "htmlContent": "<p>This is the full content of the blog post...</p>",
+        "tags": ["Fog", "Orange", "Sun", "Apple"],
+        "metaTitle": "Dummy article name - Blog Orange",
+        "metaDescription": "Learn something new about our site",
+        "metaKeywords": ["Fog", "Orange", "Sun", "Banana"],
+        "publishedDate": "2023-10-01T10:00:00Z"
+    },
+    {
+        "id": "12346",
+        "title": "Dummy article name2",
+        "description": "some dummy description about article",
+        "cover": "http://placehold.it/350x50",
+        "htmlContent": "<p>This is the full content of the blog post...</p>",
+        "tags": ["Fog", "Orange", "Sun", "Banana"],
+        "metaTitle": "Dummy article name - Blog Orange",
+        "metaDescription": "Learn something new about our site",
+        "metaKeywords": ["Fog", "Orange", "Sun", "Banana"],
+        "publishedDate": "2023-10-01T10:00:00Z"
+    },
+    {
+        "id": "12347",
+        "title": "Dummy article name",
+        "description": "some dummy description about article",
+        "cover": "http://placehold.it/350x50",
+        "htmlContent": "<p>This is the full content of the blog post...</p>",
+        "tags": ["Fog", "Orange", "Sun", "Banana"],
+        "metaTitle": "Dummy article name - Blog Orange",
+        "metaDescription": "Learn something new about our site",
+        "metaKeywords": ["Fog", "Orange", "Sun", "Banana"],
+        "publishedDate": "2023-10-01T10:00:00Z"
+    },
+    {
+        "id": "12348",
+        "title": "Dummy article name",
+        "description": "some dummy description about article",
+        "cover": "http://placehold.it/350x50",
+        "htmlContent": "<p>This is the full content of the blog post...</p>",
+        "tags": ["Fog", "Orange", "Sun", "Banana"],
+        "metaTitle": "Dummy article name - Blog Orange",
+        "metaDescription": "Learn something new about our site",
+        "metaKeywords": ["Fog", "Orange", "Sun", "Banana"],
+        "publishedDate": "2023-10-01T10:00:00Z"
+    },
+    {
+        "id": "12349",
+        "title": "Dummy article name",
+        "description": "some dummy description about article",
+        "cover": "http://placehold.it/350x50",
+        "htmlContent": "<p>This is the full content of the blog post...</p>",
+        "tags": ["Fog", "Orange", "Sun", "Banana"],
+        "metaTitle": "Dummy article name - Blog Orange",
+        "metaDescription": "Learn something new about our site",
+        "metaKeywords": ["Fog", "Orange", "Sun", "Banana"],
+        "publishedDate": "2023-10-01T10:00:00Z"
+    },
+    {
+        "id": "12340",
+        "title": "Dummy article name",
+        "description": "some dummy description about article",
+        "cover": "http://placehold.it/350x50",
+        "htmlContent": "<p>This is the full content of the blog post...</p>",
+        "tags": ["Fog", "Orange", "Sun", "Banana"],
+        "metaTitle": "Dummy article name - Blog Orange",
+        "metaDescription": "Learn something new about our site",
+        "metaKeywords": ["Fog", "Orange", "Sun", "Banana"],
+        "publishedDate": "2023-10-01T10:00:00Z"
+    },
+    {
+        "id": "12355",
+        "title": "Dummy article name",
+        "description": "some dummy description about article",
+        "cover": "http://placehold.it/350x50",
+        "htmlContent": "<p>This is the full content of the blog post...</p>",
+        "tags": ["Fog", "Orange", "Sun", "Banana"],
+        "metaTitle": "Dummy article name - Blog Orange",
+        "metaDescription": "Learn something new about our site",
+        "metaKeywords": ["Fog", "Orange", "Sun", "Banana"],
+        "publishedDate": "2023-10-01T10:00:00Z"
+    }
+]

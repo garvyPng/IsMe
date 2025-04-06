@@ -101,10 +101,15 @@ export const LauncherSection = () => {
                                 >
                                     <input
                                         {...register('price', {
-                                            required: true,
-                                            maxLength: 80,
-                                            pattern:
-                                                /^(0|[1-9]\d*)([.,]\d{1,10})?$/i,
+                                            required: 'This field is required',
+                                            maxLength: {
+                                                value: 80,
+                                                message: 'Surname is too long',
+                                            },
+                                            pattern: {
+                                                value: /^(0|[1-9]\d*)([.,]\d{1,10})?$/i,
+                                                message: 'Wrong format',
+                                            },
                                         })}
                                         id='price'
                                         name='price'
@@ -129,9 +134,9 @@ export const LauncherSection = () => {
                                         />
                                     </div>
                                 </div>
-                                {errors.price && (
-                                    <p className='text-red-500 text-xs italic'>
-                                        Please fill out this field.
+                                {typeof errors.price?.message === 'string' && (
+                                    <p className=' text-red-500 text-xs italic'>
+                                        {errors.price.message}
                                     </p>
                                 )}
                             </div>
@@ -146,10 +151,15 @@ export const LauncherSection = () => {
                                 >
                                     <input
                                         {...register('crypto', {
-                                            required: true,
-                                            maxLength: 80,
-                                            pattern:
-                                                /^(0|[1-9]\d*)([.,]\d{1,10})?$/i,
+                                            required: 'This field is required',
+                                            maxLength: {
+                                                value: 80,
+                                                message: 'Surname is too long',
+                                            },
+                                            pattern: {
+                                                value: /^(0|[1-9]\d*)([.,]\d{1,10})?$/i,
+                                                message: 'Wrong format',
+                                            },
                                         })}
                                         id='crypto'
                                         name='crypto'
@@ -175,9 +185,9 @@ export const LauncherSection = () => {
                                         />
                                     </div>
                                 </div>
-                                {errors.crypto && (
-                                    <p className='text-red-500 text-xs italic'>
-                                        Please fill out this field.
+                                {typeof errors.crypto?.message === 'string' && (
+                                    <p className=' text-red-500 text-xs italic'>
+                                        {errors.crypto.message}
                                     </p>
                                 )}
                             </div>

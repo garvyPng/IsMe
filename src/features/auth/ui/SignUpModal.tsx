@@ -1,13 +1,21 @@
 import { createPortal } from 'react-dom';
 import { SectionHeader } from '../../../shared/ui/SectionHeader';
 import { BtnPrimary } from '../../../shared/ui/BtnPrimary';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { EyeIcon, EyeSlashIcon } from '@heroicons/react/16/solid';
 
 interface SignUpModalProps {
     open: boolean;
     onClose: () => void;
     switchToLogin: () => void;
+}
+
+interface FormValues {
+    name: string;
+    surname: string;
+    email: string;
+    password: string;
 }
 
 export const SignUpModal = ({
@@ -17,11 +25,13 @@ export const SignUpModal = ({
 }: SignUpModalProps) => {
     const modalRoot = document.getElementById('modal');
     const dialog = useRef<HTMLDialogElement>(null);
+    const [showPassword, setShowPassword] = useState(false);
 
     const {
         register,
+        handleSubmit,
         formState: { errors },
-    } = useForm();
+    } = useForm<FormValues>();
 
     useEffect(() => {
         if (dialog.current) {
@@ -35,13 +45,33 @@ export const SignUpModal = ({
 
     if (!modalRoot) return null;
 
+    const onSubmit = async (data: FormValues) => {
+        try {
+            const response = await fetch('https://example.com/api/signup', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            });
+
+            if (!response.ok) {
+                throw new Error('Error while sending data');
+            }
+
+            return await response.json();
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
+
     return createPortal(
         <dialog
             ref={dialog}
             className='min-w-full md:min-w-100 mx-auto my-auto py-8 px-6 rounded-xl text-(--color-primary) shadow-2xl'
         >
             {open ? (
-                <form>
+                <form onSubmit={handleSubmit(onSubmit)}>
                     <button
                         onClick={onClose}
                         className='text-(--color-secondary) text-3xl absolute top-[5px] right-[10px] cursor-pointer'
@@ -50,88 +80,146 @@ export const SignUpModal = ({
                     </button>
                     <SectionHeader title={'Create Account'} />
                     <div className='-mt-[40px]'>
-                        <div>
-                            <label
-                                className='block tracking-wide text-xs font-semibold mb-2'
-                                htmlFor='sign_full_name'
-                            >
-                                Full Name
-                            </label>
-                            <div className='flex flex-col md:flex-row gap-x-3'>
+                        <div className='flex flex-col md:flex-row gap-x-3 mb-2'>
+                            <div className='w-full md:max-w-[170px]'>
+                                <label
+                                    className='block tracking-wide text-xs font-semibold mb-2'
+                                    htmlFor='signup_name'
+                                >
+                                    Name
+                                </label>
                                 <input
                                     {...register('name', {
-                                        required: true,
-                                        maxLength: 80,
+                                        required: 'Name is required',
+                                        maxLength: {
+                                            value: 80,
+                                            message: 'Name is too long',
+                                        },
                                     })}
-                                    className={`appearance-none block w-full md:max-w-[170px] bg-slate-100 border ${
+                                    className={`w-full appearance-none block  bg-slate-100 border ${
                                         errors.name
                                             ? 'border-red-500'
                                             : 'border-slate-200'
-                                    } rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white`}
-                                    id='sign_full_name'
-                                    type='text'
+                                    } rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white`}
+                                    id='signup_name'
+                                    type='name'
                                     placeholder='John'
                                 />
+                                {typeof errors.name?.message === 'string' && (
+                                    <p className='text-red-500 text-xs italic'>
+                                        {errors.name.message}
+                                    </p>
+                                )}
+                            </div>
+                            <div className='w-full md:max-w-[170px]'>
+                                <label
+                                    className='block tracking-wide text-xs font-semibold mb-2'
+                                    htmlFor='signup_surname'
+                                >
+                                    Surname
+                                </label>
                                 <input
-                                    {...register('name', {
-                                        required: true,
-                                        maxLength: 80,
+                                    {...register('surname', {
+                                        required: 'Surname is required',
+                                        maxLength: {
+                                            value: 80,
+                                            message: 'Surname is too long',
+                                        },
                                     })}
-                                    className={`appearance-none block w-full md:max-w-[170px] bg-slate-100 border ${
-                                        errors.name
+                                    className={`w-full appearance-none block bg-slate-100 border ${
+                                        errors.surname
                                             ? 'border-red-500'
                                             : 'border-slate-200'
-                                    } rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white`}
-                                    id='sign_full_name2'
-                                    type='text'
+                                    } rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white`}
+                                    id='signup_surname'
+                                    type='surname'
                                     placeholder='Doe'
                                 />
+                                {typeof errors.surname?.message ===
+                                    'string' && (
+                                    <p className=' text-red-500 text-xs italic'>
+                                        {errors.surname.message}
+                                    </p>
+                                )}
                             </div>
                         </div>
 
                         <div>
                             <label
                                 className='block tracking-wide text-xs font-semibold mb-2'
-                                htmlFor='sign_email'
+                                htmlFor='signup_email'
                             >
                                 Email
                             </label>
                             <input
                                 {...register('email', {
-                                    required: true,
-                                    pattern: /^\S+@\S+$/i,
+                                    required: 'Email is required',
+                                    pattern: {
+                                        value: /^\S+@\S+$/i,
+                                        message:
+                                            'Email must be in the format name@.gmail.com',
+                                    },
                                 })}
                                 className={`appearance-none block w-full bg-slate-100 border ${
                                     errors.email
                                         ? 'border-red-500'
                                         : 'border-slate-200'
-                                } rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white`}
-                                id='sign_email'
+                                } rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white`}
+                                id='signup_email'
                                 type='text'
                                 placeholder='itsme@gmail.com'
                             />
+                            {typeof errors.email?.message === 'string' && (
+                                <p className='mb-2 text-red-500 text-xs italic'>
+                                    {errors.email.message}
+                                </p>
+                            )}
                         </div>
                         <div>
                             <label
-                                className='block tracking-wide text-xs font-semibold mb-2'
+                                className='block tracking-wide text-xs font-semibold mb-2 mt-3'
                                 htmlFor='sign_password'
                             >
                                 Password
                             </label>
-                            <input
-                                {...register('name', {
-                                    required: true,
-                                    maxLength: 80,
-                                })}
-                                className={`appearance-none block w-full bg-slate-100 border ${
-                                    errors.name
-                                        ? 'border-red-500'
-                                        : 'border-slate-200'
-                                } rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white`}
-                                id='sign_password'
-                                type='password'
-                                placeholder='Your password'
-                            />
+                            <div className='relative'>
+                                <input
+                                    {...register('password', {
+                                        required: 'Password is required',
+                                        maxLength: {
+                                            value: 80,
+                                            message: 'Password is too long',
+                                        },
+                                    })}
+                                    className={`appearance-none block w-full bg-slate-100 border ${
+                                        errors.password
+                                            ? 'border-red-500'
+                                            : 'border-slate-200'
+                                    } rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white`}
+                                    id='sign_password'
+                                    type={showPassword ? 'text' : 'password'}
+                                    placeholder='Your password'
+                                />
+                                <button
+                                    className='absolute right-3 top-1/2 -translate-y-1/2 text-(--color-secondary)'
+                                    type='button'
+                                    onClick={() =>
+                                        setShowPassword(!showPassword)
+                                    }
+                                >
+                                    {showPassword ? (
+                                        <EyeIcon className='size-5' />
+                                    ) : (
+                                        <EyeSlashIcon className='size-5' />
+                                    )}
+                                </button>
+                            </div>
+
+                            {typeof errors.password?.message === 'string' && (
+                                <p className='mb-2 text-red-500 text-xs italic'>
+                                    {errors.password.message}
+                                </p>
+                            )}
                         </div>
                         <BtnPrimary add='w-full py-[16px] uppercase font-semibold text-sm mt-3'>
                             Submit

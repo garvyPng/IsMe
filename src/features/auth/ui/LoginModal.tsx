@@ -3,6 +3,7 @@ import { SectionHeader } from '../../../shared/ui/SectionHeader';
 import { BtnPrimary } from '../../../shared/ui/BtnPrimary';
 import { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { EyeIcon, EyeSlashIcon } from '@heroicons/react/16/solid';
 
 interface LoginModalProps {
     open: boolean;
@@ -10,21 +11,31 @@ interface LoginModalProps {
     switchToLogin: () => void;
 }
 
+interface FormValues {
+    email: string;
+    password: string;
+}
+
 export const LoginModal = ({
     open,
     onClose,
     switchToLogin,
 }: LoginModalProps) => {
-    const [email, setEmail] = useState<string>('');
-    const [password, setPassword] = useState<string>('');
     const [rememberMe, setRememberMe] = useState<boolean>(false);
     const modalRoot = document.getElementById('modal');
     const dialog = useRef<HTMLDialogElement>(null);
+    const [showPassword, setShowPassword] = useState(false);
 
     const {
         register,
+        handleSubmit,
         formState: { errors },
-    } = useForm();
+    } = useForm<FormValues>({
+        defaultValues: {
+            email: localStorage.getItem('rememberedEmail') || '',
+            password: localStorage.getItem('rememberedPassword') || '',
+        },
+    });
 
     useEffect(() => {
         if (dialog.current) {
@@ -36,21 +47,31 @@ export const LoginModal = ({
         }
     }, [open]);
 
-    useEffect(() => {
-        const savedEmail = localStorage.getItem('rememberedEmail');
-        if (savedEmail) {
-            setEmail(savedEmail);
-            setRememberMe(true);
-        }
-    }, []);
-
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-
+    const onSubmit = async (data: FormValues) => {
         if (rememberMe) {
-            localStorage.setItem('rememberedEmail', email);
+            localStorage.setItem('rememberedEmail', data.email);
+            localStorage.setItem('rememberedPassword', data.password);
         } else {
             localStorage.removeItem('rememberedEmail');
+            localStorage.removeItem('rememberedPassword');
+        }
+
+        try {
+            const response = await fetch('https://example.com/api/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            });
+
+            if (!response.ok) {
+                throw new Error('Error while sending data');
+            }
+
+            return await response.json();
+        } catch (error) {
+            console.error('Error:', error);
         }
     };
 
@@ -62,7 +83,7 @@ export const LoginModal = ({
             className='min-w-full md:min-w-100 mx-auto my-auto py-8 px-6 rounded-xl text-(--color-primary) shadow-2xl'
         >
             {open ? (
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit(onSubmit)}>
                     <button
                         onClick={onClose}
                         className='text-(--color-secondary) text-3xl absolute top-[5px] right-[10px] cursor-pointer'
@@ -80,44 +101,73 @@ export const LoginModal = ({
                             </label>
                             <input
                                 {...register('email', {
-                                    required: true,
-                                    pattern: /^\S+@\S+$/i,
+                                    required: 'Email is required',
+                                    pattern: {
+                                        value: /^\S+@\S+$/i,
+                                        message:
+                                            'Email must be in the format name@.gmail.com',
+                                    },
                                 })}
                                 className={`appearance-none block w-full bg-slate-100 border ${
                                     errors.email
                                         ? 'border-red-500'
                                         : 'border-slate-200'
-                                } rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white`}
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
+                                } rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white`}
                                 id='login_email'
                                 type='text'
                                 placeholder='itsme@gmail.com'
                             />
+                            {typeof errors.email?.message === 'string' && (
+                                <p className='mb-2 text-red-500 text-xs italic'>
+                                    {errors.email.message}
+                                </p>
+                            )}
                         </div>
                         <div>
                             <label
-                                className='block tracking-wide text-xs font-semibold mb-2'
-                                htmlFor='login_password'
+                                className='block tracking-wide text-xs font-semibold mb-2 mt-3'
+                                htmlFor='sign_password'
                             >
                                 Password
                             </label>
-                            <input
-                                {...register('name', {
-                                    required: true,
-                                    maxLength: 80,
-                                })}
-                                className={`appearance-none block w-full bg-slate-100 border ${
-                                    errors.name
-                                        ? 'border-red-500'
-                                        : 'border-slate-200'
-                                } rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white`}
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                id='login_password'
-                                type='password'
-                                placeholder='Your password'
-                            />
+                            <div className='relative'>
+                                <input
+                                    {...register('password', {
+                                        required: 'Password is required',
+                                        maxLength: {
+                                            value: 80,
+                                            message: 'Password is too long',
+                                        },
+                                    })}
+                                    className={`appearance-none block w-full bg-slate-100 border ${
+                                        errors.password
+                                            ? 'border-red-500'
+                                            : 'border-slate-200'
+                                    } rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white`}
+                                    id='sign_password'
+                                    type={showPassword ? 'text' : 'password'}
+                                    placeholder='Your password'
+                                />
+                                <button
+                                    className='absolute right-3 top-1/2 -translate-y-1/2 text-(--color-secondary)'
+                                    type='button'
+                                    onClick={() =>
+                                        setShowPassword(!showPassword)
+                                    }
+                                >
+                                    {showPassword ? (
+                                        <EyeIcon className='size-5' />
+                                    ) : (
+                                        <EyeSlashIcon className='size-5' />
+                                    )}
+                                </button>
+                            </div>
+
+                            {typeof errors.password?.message === 'string' && (
+                                <p className='mb-2 text-red-500 text-xs italic'>
+                                    {errors.password.message}
+                                </p>
+                            )}
                         </div>
                         <div className='flex flex-row justify-between text-xs'>
                             <div className='flex items-center'>
