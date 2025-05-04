@@ -4,6 +4,7 @@ import { BtnPrimary } from '../../../shared/ui/BtnPrimary';
 import { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/16/solid';
+import { supabase } from '../../../shared/lib/supabase';
 
 interface SignUpModalProps {
     open: boolean;
@@ -26,6 +27,7 @@ export const SignUpModal = ({
     const modalRoot = document.getElementById('modal');
     const dialog = useRef<HTMLDialogElement>(null);
     const [showPassword, setShowPassword] = useState(false);
+    const [error, setError] = useState('');
 
     const {
         register,
@@ -47,21 +49,41 @@ export const SignUpModal = ({
 
     const onSubmit = async (data: FormValues) => {
         try {
-            const response = await fetch('https://example.com/api/signup', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
+            const { data: signUpData, error } = await supabase.auth.signUp({
+                email: data.email.trim(),
+                password: data.password,
+                options: {
+                    data: {
+                        name: data.name,
+                        surname: data.surname,
+                    },
                 },
-                body: JSON.stringify(data),
             });
 
-            if (!response.ok) {
-                throw new Error('Error while sending data');
+            if (error) {
+                setError(error.message);
+                return;
             }
 
-            return await response.json();
-        } catch (error) {
-            console.error('Error:', error);
+            if (signUpData?.user && !signUpData.session) {
+                if (signUpData.user.identities?.length === 0) {
+                    setError('This email is already registered.');
+                    return;
+                }
+
+                console.log('Please confirm your email.');
+                switchToLogin();
+                return;
+            }
+
+            console.log('User registered successfully:', signUpData);
+            switchToLogin();
+        } catch (err: unknown) {
+            if (err instanceof Error) {
+                setError(err.message);
+            } else {
+                setError('Unknown error.');
+            }
         }
     };
 
@@ -224,6 +246,11 @@ export const SignUpModal = ({
                         <BtnPrimary add='w-full py-[16px] uppercase font-semibold text-sm mt-3'>
                             Submit
                         </BtnPrimary>
+                        {error && (
+                            <p className='mb-2 text-red-500 text-xs italic'>
+                                {error}
+                            </p>
+                        )}
                     </div>
                     <p className='text-center mx-auto my-6'>or sign up with</p>
                     <div className='flex gap-x-4 justify-center'>
