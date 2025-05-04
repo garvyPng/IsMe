@@ -4,6 +4,7 @@ import { BtnPrimary } from '../../../shared/ui/BtnPrimary';
 import { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/16/solid';
+import { supabase } from '../../../shared/lib/supabase';
 
 interface LoginModalProps {
     open: boolean;
@@ -25,6 +26,10 @@ export const LoginModal = ({
     const modalRoot = document.getElementById('modal');
     const dialog = useRef<HTMLDialogElement>(null);
     const [showPassword, setShowPassword] = useState(false);
+
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
 
     const {
         register,
@@ -48,30 +53,27 @@ export const LoginModal = ({
     }, [open]);
 
     const onSubmit = async (data: FormValues) => {
-        if (rememberMe) {
-            localStorage.setItem('rememberedEmail', data.email);
-            localStorage.setItem('rememberedPassword', data.password);
-        } else {
-            localStorage.removeItem('rememberedEmail');
-            localStorage.removeItem('rememberedPassword');
-        }
-
         try {
-            const response = await fetch('https://example.com/api/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data),
-            });
+            const { data: sessionData, error } =
+                await supabase.auth.signInWithPassword({
+                    email: data.email.trim(),
+                    password: data.password,
+                });
 
-            if (!response.ok) {
-                throw new Error('Error while sending data');
+            if (error) {
+                setError(error.message);
+                console.error('Login error:', error.message);
+                return;
             }
 
-            return await response.json();
-        } catch (error) {
-            console.error('Error:', error);
+            console.log('Logged in user:', sessionData);
+            onClose();
+        } catch (err: unknown) {
+            if (err instanceof Error) {
+                setError(err.message);
+            } else {
+                setError('Unknown error.');
+            }
         }
     };
 
@@ -116,6 +118,8 @@ export const LoginModal = ({
                                 id='login_email'
                                 type='text'
                                 placeholder='itsme@gmail.com'
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
                             />
                             {typeof errors.email?.message === 'string' && (
                                 <p className='mb-2 text-red-500 text-xs italic'>
@@ -147,6 +151,10 @@ export const LoginModal = ({
                                     id='sign_password'
                                     type={showPassword ? 'text' : 'password'}
                                     placeholder='Your password'
+                                    value={password}
+                                    onChange={(e) =>
+                                        setPassword(e.target.value)
+                                    }
                                 />
                                 <button
                                     className='absolute right-3 top-1/2 -translate-y-1/2 text-(--color-secondary)'
@@ -186,6 +194,11 @@ export const LoginModal = ({
                         <BtnPrimary add='w-full py-[16px] uppercase font-semibold text-sm mt-3'>
                             Submit
                         </BtnPrimary>
+                        {error && (
+                            <p className='mb-2 text-red-500 text-xs italic'>
+                                {error}
+                            </p>
+                        )}
                     </div>
                     <p className='text-center mx-auto my-6'>or log in with</p>
                     <div className='flex gap-x-4 justify-center'>

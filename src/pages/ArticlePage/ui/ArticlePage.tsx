@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { useArticles } from '../../../context/ArticleContext';
+import { useArticles } from '../../../shared/lib/context/ArticleContext';
 import { BtnPrimary } from '../../../shared/ui/BtnPrimary';
 export const ArticlePage = () => {
     const { id } = useParams<string>();

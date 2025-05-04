@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { PageIntro } from '../../../shared/ui/PageIntro';
 import { PreRegister } from '../../../shared/ui/PreRegister';
 import { BlogContent } from './BlogContent';
-import { useArticles } from '../../../context/ArticleContext';
+import { useArticles } from '../../../shared/lib/context/ArticleContext';
 
 export const BlogPage = () => {
     const { articles, loadArticlesFromSource } = useArticles();
