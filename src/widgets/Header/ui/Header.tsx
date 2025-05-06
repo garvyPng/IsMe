@@ -327,16 +327,16 @@ export const Header = () => {
                             const isActive = location.pathname === link.href;
                             return (
                                 <div className='relative' key={link.href}>
-                                    <a
-                                        href={link.href}
+                                    <Link
                                         className={`text-base ${
                                             isActive
                                                 ? 'after:left-0 after:w-full text-blue-500 '
                                                 : 'after:left-1/2 after:w-0'
                                         } hover:text-blue-500 after:absolute after:bottom-0 after:h-[2px] after:bg-blue-500 after:transition-all after:duration-300 after:ease-in-out hover:after:left-0 hover:after:w-full`}
+                                        to={link.href}
                                     >
                                         {link.label}
-                                    </a>
+                                    </Link>
                                 </div>
                             );
                         })}
