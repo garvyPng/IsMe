@@ -142,26 +142,29 @@ const SideBar = ({
                 <button className='py-6' onClick={() => setIsMenuOpen(false)}>
                     <XMarkIcon className='size-6 ' />
                 </button>
-                <nav className='mb-5'>
-                    {navLinks.map((link) => (
-                        <div
-                            className={`flex items-center text-base px-2 gap-x-2 py-2 rounded-md transition-all duration-200 ease-in-out ${
-                                window.location.href.includes(link.href)
-                                    ? 'border border-blue-300'
-                                    : 'bg-white'
-                            } hover:bg-slate-100`}
-                            key={link.href}
-                        >
-                            {link.icon}
-                            <Link
-                                className='w-full'
-                                onClick={() => setIsMenuOpen(false)}
-                                to={link.href}
+                <nav className='mb-5 space-y-1'>
+                    {navLinks.map((link) => {
+                        const isActive = location.pathname === link.href;
+                        return (
+                            <div
+                                className={`flex items-center text-base px-2 gap-x-2 py-2 rounded-md transition-all duration-200 ease-in-out ${
+                                    isActive
+                                        ? 'border border-blue-300'
+                                        : 'bg-white'
+                                } hover:bg-slate-100`}
+                                key={link.href}
                             >
-                                {link.label}
-                            </Link>
-                        </div>
-                    ))}
+                                {link.icon}
+                                <Link
+                                    className='w-full'
+                                    onClick={() => setIsMenuOpen(false)}
+                                    to={link.href}
+                                >
+                                    {link.label}
+                                </Link>
+                            </div>
+                        );
+                    })}
                 </nav>
                 <div className='flex flex-col mt-auto'>
                     <div className='w-full h-px bg-blue-300'></div>
@@ -188,7 +191,7 @@ const SideBar = ({
                                     />
                                 </svg>
 
-                                <a href='#'>Profile</a>
+                                <Link to='/account'>Profile</Link>
                             </div>
                             <div
                                 className={`flex items-center text-base px-2 gap-x-2 py-2 rounded-md transition-all duration-200 ease-in-out 
@@ -318,7 +321,7 @@ export const Header = () => {
                     <div className='flex items-center space-x-2'>
                         <div className='size-[55px] bg-yellow-300 rounded-2xl'></div>
                         <span className='text-2xl font-medium'>
-                            Is<span className='text-2xl font-bold'>Me</span>
+                            Its<span className='text-2xl font-bold'>Me</span>
                         </span>
                     </div>
 

@@ -51,7 +51,7 @@ export const UserAvatarMenu: React.FC<UserAvatarMenuProps> = ({
                     <ul className='py-1'>
                         <li>
                             <Link
-                                to='/profile'
+                                to='/account'
                                 className='block px-4 py-2 hover:bg-gray-100'
                             >
                                 Profile
