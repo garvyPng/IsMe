@@ -9,8 +9,10 @@ import { Questions } from './Questions';
 import { SolutionSection } from './SolutionSection';
 import { TrustedBy } from './TrustedBy';
 import { WhynowSection } from './WhynowSection';
+import { useAuth } from '../../../shared/lib/context/AuthContext';
 
 export const HomePage = () => {
+    const { session } = useAuth();
     return (
         <>
             <HeroSection />
@@ -23,7 +25,7 @@ export const HomePage = () => {
             <InvestmentSection />
             <LauncherSection />
             <Questions />
-            <PreRegister />
+            {!session?.user && <PreRegister />}
         </>
     );
 };

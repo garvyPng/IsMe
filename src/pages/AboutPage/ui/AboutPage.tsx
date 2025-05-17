@@ -1,3 +1,4 @@
+import { useAuth } from '../../../shared/lib/context/AuthContext';
 import { PageIntro } from '../../../shared/ui/PageIntro';
 import { PreRegister } from '../../../shared/ui/PreRegister';
 import { AboutPlayer } from './AboutPlayer';
@@ -7,6 +8,7 @@ import { Story } from './Story';
 import { Values } from './Values';
 
 export const AboutPage = () => {
+    const { session } = useAuth();
     return (
         <>
             <PageIntro
@@ -19,7 +21,7 @@ export const AboutPage = () => {
             <Values />
             <Founders />
             <News />
-            <PreRegister />
+            {!session?.user && <PreRegister />}
         </>
     );
 };
